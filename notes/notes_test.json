@@ -1,0 +1,162 @@
+{
+    "titre": "Bilan Psychomoteur - Léa M. (8 ans)",
+    "sections": {
+        "Identité & contexte": {
+            "nom": "Léa M.",
+            "age": "8 ans et 3 mois",
+            "date_naissance": "15/04/2016",
+            "classe": "CE2",
+            "etablissement": "École primaire Jules Ferry",
+            "contexte": "Demande de l'enseignante suite à des difficultés en écriture et concentration",
+            "prescripteur": "Dr. Martin (médecin scolaire)",
+            "date_bilan": "12/09/2024"
+        },
+        "Motif de la demande": {
+            "demandeur": "Enseignante de CE2 en accord avec les parents",
+            "problemes_identifies": [
+                "Écriture très lente et laborieuse",
+                "Difficultés à rester assise pendant les activités",
+                "Problèmes de concentration lors des consignes longues",
+                "Évitement des activités de coloriage et découpage"
+            ],
+            "contexte_scolaire": "Résultats scolaires corrects à l'oral mais chute importante à l'écrit",
+            "inquietudes_parents": "Parents inquiets de la fatigue importante après l'école"
+        },
+        "Anamnèse synthétique": {
+            "grossesse": "Grossesse normale, accouchement à terme sans complications",
+            "premiers_mois": "Développement psychomoteur dans les normes",
+            "marche": "Premiers pas à 14 mois",
+            "langage": "Premiers mots à 12 mois, phrases à 2 ans",
+            "proprete": "Acquisition de la propreté diurne à 2 ans et demi",
+            "sommeil": "Bon dormeur, pas de troubles du sommeil actuellement",
+            "antecedents_medicaux": "Aucun antécédent médical notable",
+            "antecedents_familiaux": "Père avec antécédents de difficultés scolaires (écriture)",
+            "habitudes": "Aime les activités physiques (vélo, natation), évite les activités manuelles fines"
+        },
+        "Évaluation psychomotrice": {
+            "Tonus & posture": {
+                "tonus_axial": "Hypotonie axiale légère observée en position assise prolongée",
+                "tonus_membres": "Tonus des membres supérieurs dans la norme",
+                "posture_assise": "Tendance à s'affaisser après quelques minutes d'activité écrite",
+                "posture_debout": "Posture debout stable et adaptée"
+            },
+            "Motricité globale": {
+                "coordination": "Bonne coordination des gestes globaux",
+                "equilibre_statique": "Équilibre statique satisfaisant (maintien sur un pied > 10 secondes)",
+                "equilibre_dynamique": "Équilibre dynamique adapté (marche sur ligne, sautillements)",
+                "dissociation": "Difficultés de dissociation des ceintures lors d'activités combinées"
+            },
+            "Motricité fine / praxies": {
+                "prehension": "Préhension en pince satisfaisante mais force de serrage insuffisante",
+                "dexterite": "Dextérité digitale limitée, gestes fins imprécis",
+                "praxies_constructives": "Difficultés importantes en construction 3D (cubes, Lego)",
+                "utilisation_outils": "Tenue du crayon crispée, fatigue rapide lors de l'écriture"
+            },
+            "Schéma corporel & latéralité": {
+                "schema_corporel": "Connaissance du schéma corporel acquise",
+                "lateralite": "Latéralité droite bien établie (main, pied, œil)",
+                "conscience_corporelle": "Bonne conscience des parties du corps",
+                "orientation_spatiale": "Quelques difficultés sur les notions droite/gauche sur autrui"
+            },
+            "Visuo-spatial": {
+                "perception_visuelle": "Bonnes capacités de perception visuelle globale",
+                "organisation_spatiale": "Difficultés d'organisation spatiale sur feuille",
+                "reproduction_formes": "Imprécisions dans la reproduction de formes géométriques complexes",
+                "structuration_spatiale": "Structuration spatiale en développement"
+            },
+            "Attention / fonctions exécutives": {
+                "attention_soutenue": "Difficultés de maintien attentionnel au-delà de 10 minutes",
+                "attention_selective": "Distractibilité importante en environnement bruyant",
+                "inhibition": "Capacités d'inhibition variables selon le contexte",
+                "flexibilite": "Flexibilité cognitive préservée",
+                "planification": "Difficultés de planification des tâches multi-étapes"
+            },
+            "Graphisme / écriture": {
+                "tenue_crayon": "Tenue du crayon en pince tripode mais crispée",
+                "pression": "Pression excessive sur le papier",
+                "formation_lettres": "Formation des lettres correcte mais très lente",
+                "liaison": "Difficultés importantes pour les liaisons en cursive",
+                "vitesse": "Vitesse d'écriture très ralentie (3-4 mots/minute)",
+                "fatigue": "Fatigue importante dès 2-3 lignes d'écriture"
+            },
+            "Sensori-moteur": {
+                "proprioception": "Proprioception satisfaisante globalement",
+                "integration_sensorielle": "Quelques difficultés d'intégration tactile (évitement textures)",
+                "regulation_sensorielle": "Hypersensibilité tactile légère au niveau des mains",
+                "feedback_sensoriel": "Utilisation adéquate du feedback visuel"
+            }
+        },
+        "Tests / outils utilisés": [
+            "M-ABC-2 (Batterie d'évaluation du mouvement)",
+            "BHK (Échelle d'évaluation de l'écriture chez l'enfant et l'adolescent)",
+            "Épreuve de copie de formes géométriques",
+            "Test d'attention soutenue (NEPSY-II)",
+            "Observation clinique libre en situation écologique",
+            "Grille d'observation posturale"
+        ],
+        "Analyse & synthèse": {
+            "forces": [
+                "Bonne motivation et coopération lors du bilan",
+                "Capacités cognitives préservées",
+                "Motricité globale satisfaisante",
+                "Bonne relation à l'adulte"
+            ],
+            "difficultes": [
+                "Difficultés graphomotrices importantes impactant la scolarité",
+                "Hypotonie axiale légère affectant l'endurance posturale",
+                "Problèmes attentionnels en lien avec la fatigue",
+                "Évitement des activités manuelles fines"
+            ],
+            "hypotheses": "Profil compatible avec un trouble de l'acquisition de la coordination (TAC) avec impact graphomoteur prédominant",
+            "impact_fonctionnel": "Retentissement scolaire important, fatigue excessive, estime de soi en baisse"
+        },
+        "Conclusion & recommandations": {
+            "conclusion": "Léa présente un profil psychomoteur caractérisé par des difficultés de coordination fine et une hypotonie axiale légère, impactant significativement ses compétences graphomotrices et son endurance posturale.",
+            "recommandations_immediates": [
+                "Prise en charge psychomotrice en individuel (1x/semaine)",
+                "Aménagements scolaires : temps majoré, réduction de la quantité d'écrit",
+                "Utilisation d'outils ergonomiques (crayon triangulaire, guide-doigts)"
+            ],
+            "recommandations_complementaires": [
+                "Consultation ophtalmologique de contrôle",
+                "Bilan orthoptique pour explorer la coordination oculo-motrice",
+                "Sensibilisation de l'équipe pédagogique aux troubles de Léa"
+            ],
+            "suivi": "Réévaluation dans 6 mois pour mesurer les progrès"
+        },
+        "Projet thérapeutique": {
+            "objectifs_principaux": [
+                "Améliorer l'endurance posturale et la régulation tonique",
+                "Développer les compétences graphomotrices",
+                "Renforcer la coordination fine et la dextérité"
+            ],
+            "objectifs_secondaires": [
+                "Soutenir la confiance en soi et la motivation",
+                "Améliorer les capacités attentionnelles",
+                "Favoriser l'intégration sensorielle"
+            ],
+            "modalites": {
+                "frequence": "1 séance hebdomadaire de 45 minutes",
+                "duree_previsionnelle": "12 mois avec réévaluation à 6 mois",
+                "type_prise_en_charge": "Individuelle",
+                "lieu": "Cabinet de psychomotricité"
+            },
+            "moyens_therapeutiques": [
+                "Renforcement postural et travail du tonus axial",
+                "Activités graphomotrices progressives",
+                "Jeux de coordination fine et bi-manuelle",
+                "Approche sensorielle et proprioceptive",
+                "Intégration d'outils numériques adaptatifs"
+            ],
+            "evaluation_progres": "Grilles d'observation mensuelles, tests standardisés à 6 mois"
+        },
+        "Modalités & consentement": {
+            "accord_parents": "Accord parental écrit obtenu pour la prise en charge",
+            "information_equipe": "Compte-rendu transmis à l'enseignante avec accord des parents",
+            "confidentialite": "Respect du secret professionnel et de la confidentialité",
+            "contact_urgence": "Parents joignables au 06.XX.XX.XX.XX",
+            "assurance": "Couverture par l'assurance responsabilité civile du cabinet",
+            "droit_retrait": "Possibilité d'arrêt de la prise en charge à tout moment"
+        }
+    }
+}

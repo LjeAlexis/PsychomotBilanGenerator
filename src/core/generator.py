@@ -414,47 +414,67 @@ class PsychomotBilanGenerator:
 
         return sections_text
 
-    def generate_bilan_sync(
+    async def generate_bilan_sync(
         self,
         notes_data: Dict,
         sections_to_generate: Optional[List[str]] = None,
         **generation_kwargs,
     ) -> Dict[str, str]:
-        """Version synchrone pour rétrocompatibilité"""
-        if self.enable_async:
-            return asyncio.run(
-                self.generate_bilan_async(
-                    notes_data, sections_to_generate, **generation_kwargs
-                )
-            )
-
-        # Implémentation synchrone simplifiée
+        """Version synchrone corrigée avec validation"""
         sections = notes_data.get("sections", {})
         sections_list = sections_to_generate or self.config.section_order
         sections_text = {}
 
+        self.logger.info(f"Début génération de {len(sections_list)} sections")
+
         for section_name in sections_list:
             if section_name not in sections:
+                self.logger.warning(f"Section manquante dans les notes: {section_name}")
                 continue
 
             self.console.print(f"📝 Génération: {section_name}")
 
             try:
-                # Conversion en async pour l'appel
-                text, metadata = asyncio.run(
-                    self.generate_section_with_quality_control(
-                        section_title=section_name,
-                        section_notes=sections[section_name],
-                        **generation_kwargs,
-                    )
+                # Utilise await au lieu d'asyncio.run
+                text, metadata = await self.generate_section_with_quality_control(
+                    section_title=section_name,
+                    section_notes=sections[section_name],
+                    **generation_kwargs,
                 )
-                sections_text[section_name] = text
-                self.metrics.successful_sections += 1
+
+                # ✅ Validation du contenu généré
+                if text and isinstance(text, str) and len(text.strip()) > 0:
+                    sections_text[section_name] = text.strip()
+                    self.metrics.successful_sections += 1
+                    self.logger.info(
+                        f"Section {section_name} générée: {len(text)} caractères"
+                    )
+                else:
+                    # Fallback si le texte est vide
+                    sections_text[section_name] = (
+                        f"[Section {section_name} en cours de développement]"
+                    )
+                    self.logger.warning(
+                        f"Section {section_name} vide, fallback appliqué"
+                    )
 
             except Exception as e:
                 self.logger.error(f"Erreur section {section_name}: {e}")
-                sections_text[section_name] = f"[Erreur lors de la génération: {e}]"
+                # Fallback en cas d'erreur
+                sections_text[section_name] = (
+                    f"[Erreur lors de la génération de la section {section_name}: {str(e)}]"
+                )
                 self.metrics.failed_sections += 1
+
+        self.logger.info(f"Génération terminée: {len(sections_text)} sections créées")
+
+        # ✅ Validation finale avant retour
+        if not sections_text:
+            self.logger.error("Aucune section générée !")
+            # Retourne au moins une section par défaut
+            sections_text = {
+                "Erreur": "Aucune section n'a pu être générée. Vérifiez vos notes d'entrée."
+            }
 
         return sections_text
 
@@ -465,9 +485,7 @@ class PsychomotBilanGenerator:
         format_type: str = "docx",
         **generation_kwargs,
     ) -> Path:
-        """
-        Pipeline complet de génération avec contrôle qualité
-        """
+        """Pipeline complet avec validation renforcée"""
         if not self.is_initialized:
             await self.initialize()
 
@@ -490,13 +508,42 @@ class PsychomotBilanGenerator:
             )
         )
 
+        # ✅ Validation des données d'entrée
+        if "sections" not in notes_data:
+            raise ValueError("Le fichier de notes ne contient pas de sections")
+
+        if not notes_data["sections"]:
+            raise ValueError("Les sections du fichier de notes sont vides")
+
         # Génération des sections
         if self.enable_async:
             sections_text = await self.generate_bilan_async(
                 notes_data, **generation_kwargs
             )
         else:
-            sections_text = self.generate_bilan_sync(notes_data, **generation_kwargs)
+            sections_text = await self.generate_bilan_sync(
+                notes_data, **generation_kwargs
+            )
+
+        # ✅ Validation des sections générées
+        if not sections_text:
+            raise RuntimeError("Aucune section n'a été générée")
+
+        # Filtre les sections vides ou None
+        valid_sections = {}
+        for section_name, content in sections_text.items():
+            if content and isinstance(content, str) and len(content.strip()) > 0:
+                valid_sections[section_name] = content.strip()
+            else:
+                self.logger.warning(
+                    f"Section {section_name} ignorée (vide ou invalide)"
+                )
+
+        if not valid_sections:
+            raise RuntimeError("Toutes les sections générées sont vides ou invalides")
+
+        sections_text = valid_sections
+        self.logger.info(f"Sections valides: {list(sections_text.keys())}")
 
         # Contrôle qualité global
         if self.quality_checker:
@@ -506,7 +553,7 @@ class PsychomotBilanGenerator:
 
             if global_quality.issues:
                 self.console.print("⚠️  [yellow]Problèmes qualité détectés:[/yellow]")
-                for issue in global_quality.issues[:5]:  # Limite à 5
+                for issue in global_quality.issues[:5]:
                     self.console.print(f"  • {issue}", style="yellow")
 
         # Génération du document final
@@ -517,6 +564,12 @@ class PsychomotBilanGenerator:
         self.logger.info(f"Génération du document: {output_file}")
 
         if format_type == "docx":
+            # ✅ Vérification finale avant création du document
+            if not all(isinstance(content, str) for content in sections_text.values()):
+                raise ValueError(
+                    "Toutes les sections doivent être des chaînes de caractères"
+                )
+
             await self.docx_writer.build_document(
                 sections_text=sections_text,
                 output_path=output_file,
@@ -561,7 +614,7 @@ class PsychomotBilanGenerator:
         self.console.print(f"🤖 Modèle utilisé: [bold]{self.model_name}[/bold]")
 
         # Statistiques sections
-        self.console.print(f"\n📝 Sections:")
+        self.console.print(f"\n📑 Sections:")
         self.console.print(
             f"  • Générées avec succès: [green]{self.metrics.successful_sections}[/green]"
         )
