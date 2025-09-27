@@ -1,25 +1,293 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project]
-name = "psychomotbilan-generator"
-version = "0.1.0"
-description = "Générateur de bilans psychomoteurs à partir de notes structurées et d'un LLM local"
+name = "psychomot-bilan-generator"
+version = "2.0.0"
+description = "Générateur de bilans psychomoteurs avec IA - Version professionnelle"
 readme = "README.md"
+license = {text = "MIT"}
 authors = [
-  { name="LjeAlexis", email="alexislajugiepro@gmail.com" }
+    {name = "LjeAlexis", email = "alexislajugiepro@gmail.com"},
 ]
-license = { text = "MIT" }
-requires-python = ">=3.10"
-
+keywords = ["psychomotricité", "bilan", "IA", "LLM", "santé", "évaluation"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Healthcare Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Typing :: Typed",
+]
+requires-python = ">=3.9"
 dependencies = [
-  "transformers>=4.44.0",
-  "accelerate>=0.33.0",
-  "bitsandbytes>=0.43.0",
-  "torch",
-  "python-docx>=1.1.2"
+    # Core ML dependencies
+    "torch>=2.3.0",
+    "transformers>=4.44.0",
+    "accelerate>=0.33.0",
+    "bitsandbytes>=0.43.0",
+    "datasets>=2.21.0",
+    "tokenizers>=0.19.0",
+    
+    # Document processing
+    "python-docx>=1.1.0",
+    "python-dotenv>=1.0.1",
+    
+    # UI and CLI
+    "rich>=13.7.0",
+    "typer>=0.12.0",
+    "tqdm>=4.66.0",
+    
+    # Data processing
+    "numpy>=1.26.0",
+    "pandas>=2.2.0",
+    "scikit-learn>=1.5.0",
+    
+    # Configuration and validation
+    "pydantic>=2.8.0",
+    "pydantic-settings>=2.4.0",
+    
+    # Logging and monitoring
+    "loguru>=0.7.2",
+    "psutil>=6.0.0",
+    
+    # Caching
+    "diskcache>=5.6.3",
+    
+    # GPU monitoring (optional)
+    "pynvml>=11.5.0",
 ]
+
+[project.optional-dependencies]
+# Analyse linguistique avancée
+nlp = [
+    "spacy>=3.7.0",
+    "textstat>=0.7.3",
+    "nltk>=3.9.0",
+    "language-tool-python>=2.8.0",
+]
+
+# Fonctionnalités avancées
+advanced = [
+    "sentence-transformers>=3.0.0",
+    "evaluate>=0.4.2",
+    "rouge-score>=0.1.2",
+    "bert-score>=0.3.13",
+]
+
+# Interface web (future)
+web = [
+    "gradio>=4.38.0",
+    "streamlit>=1.37.0",
+    "fastapi>=0.112.0",
+    "uvicorn>=0.30.0",
+]
+
+# Développement
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=5.0.0",
+    "pytest-xdist>=3.6.0",
+    "black>=24.4.0",
+    "ruff>=0.5.0",
+    "mypy>=1.11.0",
+    "pre-commit>=3.8.0",
+    "coverage>=7.6.0",
+]
+
+# Documentation
+docs = [
+    "sphinx>=7.4.0",
+    "sphinx-rtd-theme>=2.0.0",
+    "myst-parser>=3.0.0",
+    "sphinx-autodoc-typehints>=2.2.0",
+]
+
+# Tout inclus
+all = [
+    "psychomot-bilan-generator[nlp,advanced,web,dev,docs]",
+]
+
+[project.urls]
+Homepage = "https://github.com/votre-username/psychomot-bilan-generator"
+Documentation = "https://psychomot-bilan-generator.readthedocs.io/"
+Repository = "https://github.com/votre-username/psychomot-bilan-generator.git"
+"Bug Tracker" = "https://github.com/votre-username/psychomot-bilan-generator/issues"
+Changelog = "https://github.com/votre-username/psychomot-bilan-generator/blob/main/CHANGELOG.md"
 
 [project.scripts]
-pbg = "cli:main"
+pbg = "src.cli:main"
+psychomot-bilan = "src.cli:main"
+pbg-setup = "scripts.setup:main"
+pbg-benchmark = "scripts.benchmark:main"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*", "config*", "scripts*"]
+exclude = ["tests*", "docs*", "examples*"]
+
+[tool.setuptools.package-data]
+"config" = ["*.yaml", "*.json", "*.toml"]
+"src" = ["py.typed"]
+
+# Black configuration
+[tool.black]
+line-length = 88
+target-version = ['py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+# Ruff configuration (remplace flake8)
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]  # Allow unused imports in __init__.py
+
+# MyPy configuration
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = [
+    "transformers.*",
+    "torch.*",
+    "accelerate.*",
+    "bitsandbytes.*",
+    "spacy.*",
+    "language_tool_python.*",
+    "textstat.*",
+    "docx.*",
+    "gradio.*",
+    "streamlit.*",
+]
+ignore_missing_imports = true
+
+# Pytest configuration
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--cov=src",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+    "--cov-report=xml",
+    "--cov-fail-under=80",
+]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "gpu: marks tests that require GPU",
+    "model_download: marks tests that download models",
+]
+filterwarnings = [
+    "ignore::UserWarning",
+    "ignore::DeprecationWarning",
+]
+asyncio_mode = "auto"
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+    "*/site-packages/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+# Bandit security linting
+[tool.bandit]
+exclude_dirs = ["tests", "build", "dist"]
+tests = ["B201", "B301"]
+skips = ["B101", "B601"]
